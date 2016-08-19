@@ -9,18 +9,19 @@ def zips_song(song_input):
     input_list = song_input.split("\n")
     header = input_list.pop(0)
     input_list = filter(None, input_list)
-    no_of_songs_to_select = int(header.split(" ")[1])
-    songs, index = [], 1.0
+    header_list = header.split(" ")
+    no_of_songs, no_of_songs_to_select = int(header_list[0]), int(header_list[1])
+    songs, index = [], 1
     for row in input_list:
-        zipfs = float(1/index)
         row_list = row.split(" ")
-        plays, name, track_no = int(row_list[0]), row_list[1], int(index)
         songs.append({
-            'track_no': track_no,
-            'plays': plays,
-            'name': name,
-            'quality': plays/zipfs,
+            'track_no': index,
+            'plays': row_list[0],
+            'name': row_list[1],
+            'quality': int(row_list[0])*index,
         })
+        if index == no_of_songs:
+            break
         index += 1
     songs.sort(key=lambda x: (-x['quality'], x['track_no']))
     ordered_songs = []
